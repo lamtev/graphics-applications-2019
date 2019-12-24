@@ -8,14 +8,20 @@
 
 namespace plt = matplotlibcpp;
 
-void Plotter::showImg(const cv::Mat &img, const std::string &label) {
-    cv::Mat im;
-    cv::resize(img, im, cv::Size(), 0.9F, 0.9F);
-    cv::namedWindow(label, cv::WINDOW_AUTOSIZE);
-    cv::imshow(label, im);
+void Plotter::showImg(const cv::Mat &img, const std::string &label, const std::string &filename, bool save) {
+    if (save) {
+        saveImg(img, filename);
+    }
+    cv::namedWindow(filename, cv::WINDOW_AUTOSIZE);
+    cv::imshow(filename, img);
 }
 
-void Plotter::showHist(const std::vector<int> &hist, const std::string &label, int l, int r) {
+void Plotter::saveImg(const cv::Mat &img, const std::string &fileName) {
+    std::vector<int> params = {cv::IMWRITE_JPEG_QUALITY, 100};
+    cv::imwrite(fileName + ".jpg", img, params);
+}
+
+void Plotter::showHist(const std::vector<int> &hist, const std::string &label, const std::string &filename, bool save, int l, int r) {
     plt::plot(hist);
     if (l != -1 && r != -1) {
         std::vector<double> lx(100, static_cast<double>(l));
@@ -26,22 +32,27 @@ void Plotter::showHist(const std::vector<int> &hist, const std::string &label, i
             y.push_back(i * (yMax / 100));
         }
 
-        plt::plot(lx, y);
-        plt::plot(rx, y);
+        plt::plot(lx, y, "r");
+        plt::plot(rx, y, "r");
     }
     plt::title(label);
-    auto fileName = label;
+    auto fileName = filename;
     fileName += "_hist";
-    plt::save(fileName);
+    if (save) {
+        plt::save(fileName);
+    }
     plt::close();
 }
 
-void Plotter::showHists(const std::vector<int> &hist1, const std::vector<int> &hist2, const std::string &label) {
-    plt::plot(hist1);
-    plt::plot(hist2);
+void Plotter::showHists(const std::vector<int> &h, const std::vector<int> &cdf, const std::string &label, const std::string &filename, bool save) {
+    plt::named_plot("h", h, "b");
+    plt::named_plot("cdf", cdf, "r");
+    plt::legend();
     plt::title(label);
-    auto fileName = label;
-    fileName += "_hist";
-    plt::save(fileName);
+    auto fileName = filename;
+    fileName += "_hists";
+    if (save) {
+        plt::save(fileName);
+    }
     plt::close();
 }

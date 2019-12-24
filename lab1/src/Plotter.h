@@ -10,8 +10,9 @@
 
 class Plotter {
 public:
-    static void showImg(const cv::Mat &img, const std::string &label);
-    static void showHist(const std::vector<int> &hist, const std::string &label, int l = -1, int r = -1);
-    static void showHists(const std::vector<int> &hist1, const std::vector<int> &hist2, const std::string &label);
+    static void showImg(const cv::Mat &img, const std::string &label, const std::string &filename, bool save = false);
+    static void saveImg(const cv::Mat &img, const std::string &fileName);
+    static void showHist(const std::vector<int> &hist, const std::string &label, const std::string &filename, bool save = true, int l = -1, int r = -1);
+    static void showHists(const std::vector<int> &h, const std::vector<int> &cdf, const std::string &label, const std::string &filename, bool save = true);
 };
 

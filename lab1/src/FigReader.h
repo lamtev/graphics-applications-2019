@@ -6,9 +6,10 @@
 
 #include <vector>
 #include <string>
-#include "Fig.h"
+
+class Fig;
 
 class FigReader {
 public:
-    static std::vector<Fig> readFigs(const std::vector<std::string> &paths);
+    static std::vector<Fig> readFigs(const std::vector<std::string> &args);
 };
