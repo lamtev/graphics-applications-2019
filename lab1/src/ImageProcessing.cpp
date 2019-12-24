@@ -117,3 +117,8 @@ cv::Mat ImageProcessing::equalize(const cv::Mat &img, const std::vector<int> &h)
     return equalized;
 }
 #pragma clang diagnostic pop
+
+
+cv::Mat ImageProcessing::match(const cv::Mat &img, const cv::Mat &ref) {
+    auto hist = ImageProcessing::hist(img);
+}

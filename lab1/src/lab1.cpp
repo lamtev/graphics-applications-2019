@@ -2,10 +2,7 @@
 // Created by anton on 12.11.2019.
 //
 
-#include <iostream>
 #include <vector>
-#include <opencv4/opencv2/opencv.hpp>
-#include "hist.h"
 #include "FigReader.h"
 #include "Stretching.h"
 #include "Equalization.h"
