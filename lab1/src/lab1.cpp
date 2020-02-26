@@ -6,6 +6,8 @@
 #include "FigReader.h"
 #include "Stretching.h"
 #include "Equalization.h"
+#include "Matching.h"
+#include "Fig.h"
 
 int main(int argc, char **argv) {
     std::vector<std::string> args;
@@ -22,6 +24,12 @@ int main(int argc, char **argv) {
 
     lab1::Stretching::doExp(figs);
     lab1::Equalization::doExp(figs);
+
+    auto ref = FigReader::readFig("sierra.jpg");
+    std::vector<Fig> img;
+    img.push_back(FigReader::readFig("el-captain.jpg"));
+
+    lab1::Matching::doExp(ref, img);
 
     return 0;
 }

@@ -22,6 +22,8 @@ namespace lab1 {
 
         static int cdfMin(const std::vector<int> &h);
 
+        static std::vector<float> cdfNorm(const std::vector<int> &h);
+
         static cv::Mat equalize(const cv::Mat &img, const std::vector<int> &h);
 
         static cv::Mat match(const cv::Mat &img, const cv::Mat &ref);

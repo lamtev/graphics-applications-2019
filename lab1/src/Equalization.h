@@ -4,7 +4,6 @@
 
 #pragma once
 
-#include "Fig.h"
 #include <vector>
 
 class Fig;

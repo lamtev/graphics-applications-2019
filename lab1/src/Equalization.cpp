@@ -3,6 +3,7 @@
 //
 
 #include "Equalization.h"
+#include "Fig.h"
 #include "Plotter.h"
 #include "ImageProcessing.h"
 #include <algorithm>

@@ -102,6 +102,17 @@ int ImageProcessing::cdfMin(const std::vector<int> &h) {
     return _cdfMinIt != h.cend() ? *_cdfMinIt : 0;
 }
 
+std::vector<float> ImageProcessing::cdfNorm(const std::vector<int> &h) {
+    auto max = *std::max_element(h.cbegin(), h.cend());
+    std::vector<float> copy;
+    copy.reserve(h.size());
+    copy.insert(copy.cbegin(), h.cbegin(), h.cend());
+    for (auto &el : copy) {
+        el /= (float) max;
+    }
+    return copy;
+}
+
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "modernize-loop-convert"
 cv::Mat ImageProcessing::equalize(const cv::Mat &img, const std::vector<int> &h) {
@@ -121,4 +132,37 @@ cv::Mat ImageProcessing::equalize(const cv::Mat &img, const std::vector<int> &h)
 
 cv::Mat ImageProcessing::match(const cv::Mat &img, const cv::Mat &ref) {
     auto hist = ImageProcessing::hist(img);
+    auto cdf = ImageProcessing::cdf(hist);
+    auto cdfNorm = ImageProcessing::cdfNorm(cdf);
+
+    auto refHist = ImageProcessing::hist(ref);
+    auto refCdf = ImageProcessing::cdf(refHist);
+    auto refCdfNorm = ImageProcessing::cdfNorm(refCdf);
+
+    auto res = img.clone();
+
+    std::vector<uchar> colors(256);
+    for (auto i = 0; i < cdfNorm.size(); ++i) {
+        auto delta = 1e5;
+        auto nearest = 0;
+
+        for (auto j = 0; j < refCdfNorm.size(); ++j) {
+            auto localDelta = std::fabs(cdfNorm[i] - refCdfNorm[j]);
+            if (localDelta < delta) {
+                delta = localDelta;
+                nearest = j;
+            }
+        }
+
+        colors[i] = nearest;
+    }
+
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "modernize-loop-convert"
+    for (auto el = res.begin<uchar>(); el != res.end<uchar>(); ++el) {
+        *el = colors[*el];
+    }
+#pragma clang diagnostic pop
+
+    return res;
 }

@@ -35,3 +35,21 @@ std::vector<Fig> FigReader::readFigs(const std::vector<std::string> &args) {
 
     return figs;
 }
+
+Fig FigReader::readFig(const std::string &path) {
+    auto lastSlashIdx = path.find_last_of('/');
+
+    auto lastFileNameCharIdx = path.find_last_of(".jpg");
+    if (lastFileNameCharIdx == -1) {
+        lastFileNameCharIdx = path.find_last_of(".png");
+    }
+    lastFileNameCharIdx -= 1;
+    auto img = cv::imread(path, cv::IMREAD_GRAYSCALE);
+
+    return Fig(
+            path.substr(lastSlashIdx + 1, lastFileNameCharIdx - lastSlashIdx - 3),
+            img,
+            5,
+            5
+    );
+}

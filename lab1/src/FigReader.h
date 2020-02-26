@@ -12,4 +12,6 @@ class Fig;
 class FigReader {
 public:
     static std::vector<Fig> readFigs(const std::vector<std::string> &args);
+
+    static Fig readFig(const std::string &path);
 };
