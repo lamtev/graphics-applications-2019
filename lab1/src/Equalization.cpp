@@ -17,12 +17,12 @@ void Equalization::doExp(const std::vector<Fig> &figs) {
         auto hist = ImageProcessing::hist(img);
 
         auto filename = fig.name();
-        filename += "_source";
+        filename += "_eq_source";
         Plotter::showHists(hist, ImageProcessing::cdf(hist), "Histogram of source image", filename);
         Plotter::showImg(img, "Source image", filename, false);
 
         filename = fig.name();
-        filename += "_equalized";
+        filename += "_eq_equalized";
         auto equalized = ImageProcessing::equalize(img, hist);
         auto equalizedHist = ImageProcessing::hist(equalized);
         Plotter::showHists(equalizedHist, ImageProcessing::cdf(equalizedHist), "Equalized histogram", filename);

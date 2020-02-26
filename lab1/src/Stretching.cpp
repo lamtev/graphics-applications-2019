@@ -17,19 +17,19 @@ void Stretching::doExp(const std::vector<Fig> &figs) {
         auto hist = ImageProcessing::hist(img);
 
         auto filename = fig.name();
-        filename += "_source";
+        filename += "_stretch_source";
         Plotter::showHist(hist, "Histogram of source image", filename);
         Plotter::showImg(img, "Source image", filename, false);
 
         filename = fig.name();
-        filename += "_stretched";
+        filename += "_stretch_stretched";
         auto stretched = ImageProcessing::stretchLinearly(img);
         auto stretchedHist = ImageProcessing::hist(stretched);
         Plotter::showHist(stretchedHist, "Histogram after linear stretching", filename);
         Plotter::showImg(stretched, "Image after linear stretching", filename, true);
 
         filename = fig.name();
-        filename += "_stretched_with_bounds";
+        filename += "_stretch_stretched_with_bounds";
         double low = fig.lowDropBound();
         double high = fig.highDropBound();
         auto withBounds = ImageProcessing::stableAutocontrast(img, hist, low, high);
